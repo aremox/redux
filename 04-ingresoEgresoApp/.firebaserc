@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ingreso-egreso-82fe5": {
+      "hosting": {
+        "ingresoEgresoApp": [
+          "ingreso-egreso-82fe5"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ingreso-egreso-82fe5"
+  }
+}
