@@ -15,7 +15,7 @@ import { getDoc } from '@firebase/firestore';
 })
 export class AuthService {
 
-  
+  private _user: Usuario | null = null;
 
   constructor( 
     private auth: Auth,
@@ -31,6 +31,10 @@ export class AuthService {
   //   return addDoc(ref,{nombre, email, password} )
   // }
 
+  get user(){
+    return {...this._user };
+  }
+
   initAuthListener(){
     return authState(this.auth).subscribe( async fuser => {
       // console.log(fuser);
@@ -41,8 +45,11 @@ export class AuthService {
         const docSnap = (await getDoc(docRef)).data()
         const tempUser = new Usuario(docSnap?.['uid'], docSnap?.['nombre'], docSnap?.['email'])
         this.store.dispatch( authActions.setUser({user: {...tempUser}}))
+        this._user = tempUser;
+
       }else{
-        console.log('Llamar a unset del user')
+        this._user = null;
+        this.store.dispatch( authActions.unSetUser());
       }
 
       
