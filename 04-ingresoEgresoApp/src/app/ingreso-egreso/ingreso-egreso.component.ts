@@ -46,12 +46,6 @@ export class IngresoEgresoComponent implements OnInit, OnDestroy{
 
     this.store.dispatch(ui.isLoading())
 
-    setTimeout(() => {
-      console.log("paso por aqui")
-      this.store.dispatch(ui.stopLoading())
-    }, 2500);
-
-    return
 
     if ( this.ingresoForm.invalid){return;}
     console.log(this.ingresoForm.value)

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { doc, Firestore, setDoc, addDoc, collection } from '@angular/fire/firestore';
+import { doc, Firestore, setDoc, addDoc, collection, getDoc, query, getDocs, DocumentData, QuerySnapshot, collectionData } from '@angular/fire/firestore';
+import { of, Observable } from 'rxjs';
 import { IngresoEgreso } from '../models/ingreso-egreso.model';
 import { AuthService } from './auth.service';
 
@@ -23,4 +24,30 @@ export class IngresoEgresoService {
     
     return setDoc(docRef,{...ingresoEgreso} ).then( () => console.log('exito!')).catch(err => console.log(err));
   }
+
+  // Estatico 
+  async initIngresosEgresosListener(uid: string){
+
+    const colRef = collection(this.firestore, uid, 'ingreso-egreso', 'item');
+    const result = await getDocs(query(colRef));
+    const data =  this.getArrayFromCollection( result);
+    return data;
+
+  }
+
+  // En tiempo real
+  getIngresosEgresos(uid: string): Observable<IngresoEgreso[]> {
+    const colRef = collection(this.firestore, uid, 'ingreso-egreso', 'item');
+    return collectionData(colRef, {idField: 'id'}) as Observable<IngresoEgreso[]>;
+
+  }
+
+
+  getArrayFromCollection = (collection: QuerySnapshot<DocumentData>) => {
+    return collection.docs.map(doc => {
+        return { ...doc.data(), id: doc.id };
+    });
+  }
 }
+
+
