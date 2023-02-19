@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
 import { IngresoEgreso } from '../../models/ingreso-egreso.model';
 import { Subscription } from 'rxjs';
 import { ChartData, ChartEvent, ChartType } from 'chart.js';
+import { StateWithIngreso } from '../ingreso-egreso.reducer';
 
 @Component({
   selector: 'app-estadistica',
@@ -27,7 +27,7 @@ export class EstadisticaComponent implements OnInit, OnDestroy{
 
   estadisticasSubs!: Subscription;
 
-  constructor( private store:Store<AppState>){}
+  constructor( private store:Store<StateWithIngreso>){}
  
   ngOnInit(): void {
    this.estadisticasSubs = this.store.select('ingresosEgresos')
