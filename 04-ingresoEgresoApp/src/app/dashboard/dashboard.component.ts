@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 filter( auth => auth.user != null)
               )
               .subscribe( ({user}) => {
-                console.log(user)
+                //console.log(user)
                 // this.ingresoEgresoService.initIngresosEgresosListener(user!.uid).then( (data: any[]) => {
                 //   console.log(data)
                 //   this.store.dispatch( setItems({ items: data}))

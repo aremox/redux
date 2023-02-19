@@ -56,8 +56,10 @@ export class IngresoEgresoComponent implements OnInit, OnDestroy{
 
     this.ingresoEgresoService.crearIngresoEgreso(ingresoEgreso).then( () => {
       this.ingresoForm.reset();
+      this.store.dispatch(ui.stopLoading())
       Swal.fire('Registro creado', descripcion, 'success')
     }).catch( err => {
+      this.store.dispatch(ui.stopLoading())
       Swal.fire('Error', err, 'error')
     })
   }
